@@ -6,15 +6,15 @@ pipeline {
                git branch: 'main', url: 'https://github.com/jyothisalagondla/vsts-task.git'
             }
         }
-        stage('download dpendencies'){
-            steps 
+        stage ('download dpendencies'){
+            steps {
                 sh 'npm install'
             }
         }
-        stage('junit test result') {
+        stage ('junit test result') {
             steps {
                 junit '**/surefire-reports/*.xml'
                 archiveArtifacts artifacts: '**/*.jar', followSymlinks: false
             }   
         }
-    }
+    } 
