@@ -1,21 +1,16 @@
 pipeline {
     agent {label 'build_java_11'}
+    tools {nodejs "node"}
     stages {
         stage ('sourcecode') {
             steps {
                git branch: 'main', url: 'https://github.com/jyothisalagondla/vsts-task.git'
             }
         }
-        stage ('download dpendencies'){
+        stage ('download dpendencies') {
             steps {
-                sh 'npm install -y'
+                sh 'npm install'
             }
-        }
-        stage ('junit test result') {
-            steps {
-                junit '**/surefire-reports/*.xml'
-                archiveArtifacts artifacts: '**/*.jar', followSymlinks: false
-            }   
         }
     } 
 }
