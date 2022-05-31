@@ -7,10 +7,5 @@ pipeline {
                 git branch: 'main', url: 'https://github.com/jyothisalagondla/vsts-task.git'
             }
         }
-        stage('install dependencies') {
-            steps {
-                sh 'npm install'
-            }
-        }
     }
 }
