@@ -1,10 +1,16 @@
 pipeline {
-    agent any
+    agent {label 'build_java_11'}
     tools {nodejs "node"}
     stages {
         stage ('sourcecode') {
             steps {
                 git branch: 'main', url: 'https://github.com/jyothisalagondla/vsts-task.git'
+            }
+        }
+        stage('install dependencies') {
+            steps {
+                sh 'npm install'
+                sh 'npm run build'
             }
         }
     }
