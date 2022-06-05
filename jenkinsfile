@@ -24,7 +24,6 @@ pipeline {
         stage('package') {
             steps{
                 sh 'npm pack'
-                npm i jest-junit
            }
         }                       
     }
