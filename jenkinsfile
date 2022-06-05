@@ -10,7 +10,15 @@ pipeline {
         stage('install dependencies') {
             steps {
                 sh 'npm install'
+            }
+        }
+        stage('npm build') {
+            steps {
                 sh 'npm run build'
+            }
+        }
+        stage('package') {
+            steps {
                 sh 'npm build pack'
             }
         }
