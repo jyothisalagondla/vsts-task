@@ -26,11 +26,6 @@ pipeline {
                 sh 'npm pack'
             }
         }
-        stage('junit test result') {
-            steps {
-                junit '**/surefire-reports/*.xml'
-                archiveArtifacts artifacts: '**/*.jar', followSymlinks: false
-            }   
-        }
+        
     }
 }
