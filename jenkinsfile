@@ -30,6 +30,35 @@ pipeline {
             steps{
                 sh 'npm pack'
            }
-        }                       
+        }               
+        stage('Artifactory-Configuration') {
+            steps {
+                rtNpmDeployer (
+                    id: 'nodejsnpm-deployer',
+                    serverId: 'jfrog',
+                    repo: 'npm-npm-local',
+
+                )
+            }
+        }
+        stage('deploy') {
+            steps {
+
+                rtNpmPublish (
+                    tool: 'nodejs16.15.0',
+                    pom: 'pom.xml',
+                    goals: 'clean install',
+                    deployerId: 'nodejsnpm-deployer',
+                )
+
+            }
+        }        
+        stage('build') {
+            steps {
+                rtPublishinfo(
+                    serverid: 'jfrog',
+                )
+            }
+        }
     }
 }
