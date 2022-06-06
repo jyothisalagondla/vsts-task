@@ -11,40 +11,43 @@ pipeline {
                 sh 'npm install'
             }
         }
-        stage(test) {
+         stage('build') {
             steps {
-                sh 'npm test'
+                sh 'npm run build'
             }
         }
         stage('package') {
             steps{
                 sh 'npm pack'
            }
-        }               
-        stage('Artifactory-Configuration') {
+        }       
+        stage(test) {
             steps {
+                sh 'npm test'
+            }
+        }
+             stage ('Artifactory configuration') {
+            steps {
+                
                 rtNpmDeployer (
-                    id: 'nodejsnpm-deployer',
-                    serverId: 'jfrog',
-                    repo: 'npm-npm-local',
-
+                    id: "NPM_DEPLOYER",
+                    serverId: "jfrog",
+                    repo: "npm-npm-local"   
                 )
             }
         }
-        stage('deploy') {
+         stage ('Exec npm publish') {
             steps {
-
                 rtNpmPublish (
                     tool: 'nodejs16.15.0',
-                    deployerId: 'nodejsnpm-deployer',
+                    deployerId: "NPM_DEPLOYER"
                 )
-
             }
-        }        
-        stage('build') {
+        }
+        stage ('Publish build info') {
             steps {
-                rtPublishinfo(
-                    serverid: 'jfrog',
+                rtPublishBuildInfo (
+                    serverId: "jfrog"
                 )
             }
         }
