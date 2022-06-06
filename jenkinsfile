@@ -30,7 +30,7 @@ pipeline {
             steps {
                 
                 rtNpmDeployer (
-                    id: "NPM_DEPLOYER",
+                    id: "JFROGNPM_DEPLOYER",
                     serverId: "jfrog",
                     repo: "npm-npm-local"   
                 )
@@ -40,7 +40,7 @@ pipeline {
             steps {
                 rtNpmPublish (
                     tool: 'nodejs16.15.0',
-                    deployerId: "NPM_DEPLOYER"
+                    deployerId: "JFROGNPM_DEPLOYER"
                 )
             }
         }
